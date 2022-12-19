@@ -1,0 +1,214 @@
+################################### GOLANG PROGRAM     ###################################
+
+package main
+
+import (
+	"fmt"
+)
+
+func movment( str string)string{
+      n_size  := 0
+      begin := 1
+     input_size  := len(str)
+     
+     new_str   := ""
+    new_str += string(str[0])
+    for begin < input_size {
+        if str[begin] == '/' && new_str[n_size] == '/' {
+            continue
+        }else{
+            new_str += string(str[begin]);
+            n_size++;
+        }
+        begin++
+    }
+    return new_str;
+}
+
+
+func get_path( a, b string)string{
+    
+    b = movment(b)
+    var  c string = a
+    n := len(b)
+    n1 := len(a)
+    k := n1-1
+    for i := 0; i< n; i++ {
+         temp  := ""
+        for i < n && b[i] != '/' {
+             fmt.Printf("b: %s/ -\n", b[i] )
+            temp += string(b[i])
+            i++
+        }
+        if(temp == ".."){
+            for(k >=0 && a[k] != '/'){
+                k--;
+            }
+            a = a[0:k+1];
+            if(a == ""){
+                a = "/";
+            }
+        }else if(temp == "." || temp == ""){
+            continue
+        }else{
+            if(c == a){
+                kk :=0
+                ee:=0;
+                for(kk < n1 && ee < n && a[kk] == b[ee]){
+                    kk++
+                    ee++
+                }
+                return string(a[0:kk]) + string(b[ee:n])
+            }else if(a != "/"){
+                a += "/" + temp; 
+            }else{
+                a += temp;
+            }
+        }
+    }
+    return a;
+}
+
+func main() {
+    
+	  fmt.Println("Enter Input String : ")
+	  var a string
+    fmt.Scanln(&a)
+    var b string
+    fmt.Scanln(&b)
+   fmt.Printf(" Output : %s \n", get_path(a,b))
+    
+}
+
+
+##########################################   C++ PROGRAM.   ################################################
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+string movment(string &str){
+     
+    unsigned long long int n_size = 0, begin = 1, input_size = str.size();
+    string new_str = "";
+    new_str += str[0];
+    for(;begin < input_size; ++begin){
+        if(str[begin] == '/' && new_str[n_size] == '/')
+            continue;
+        else{
+            new_str += str[begin]; 
+            ++n_size;
+        }
+    }
+    return new_str;
+}
+
+
+string get_path(string &a, string &b){
+    b = movment(b);
+    string c = a, d = b;
+    int n = b.size();
+    int len = a.size();
+    int k = len -1;
+    for(int i=0; i< n; ++i){
+        string temp = "";
+        while(i < n && b[i] != '/')
+            temp += b[i++];
+        
+        if(temp == ".."){
+            while(k >=0 && a[k--] != '/');
+            
+            a = a.substr(0, k+1);
+            if(a == "")
+                a = "/";
+        }
+        
+        else if(temp == "." || temp == ""){
+            continue;
+        }
+        else{
+            if(c == a){
+                int kk =0, ee=0;
+                while(kk < len && ee < n && a[kk] == b[ee])
+                {
+                    ++kk;
+                    ++ee;
+                }
+                return a.substr(0,kk) + b.substr(ee);
+            }
+            else if(a != "/")
+                a += "/" + temp; 
+            else
+                a += temp;
+        } 
+    }
+    return a;
+}
+
+
+int main(){
+     string a , b;
+     cin>>a>>b;
+     cout <<get_path(a,b)<<endl;
+    return 0;
+}
+
+
+
+
+###############################################################
+
+Test by this inputs:
+INPUT :  string a = "/";
+    string b ="abc";
+    string a = "/abc/def";
+    string b ="ghi";
+    string a = "/abc/def";
+    string b ="..";
+    string a = "/abc/def";
+    string b ="/abc";
+    string a = "/abc/def";
+    string b ="/abc/klm";
+    string a = "/abc/def";
+    string b = "../..";
+    string a = "/abc/def";
+    string b = ".";
+    string a = "/abc/def";
+    string b = "..klm";
+    string a = "/abc/def";
+    string b = "../../..";
+
+OUTPUT:
+
+abc
+
+ghi
+
+/abc
+
+/abc
+
+
+/abc/klm
+
+/
+
+/
+
+/abc/def
+
+..klm: No such file or directory
+
+/
+
+##############################################################################################
+How to run it? 
+Just call the main function taking input from the user
+
+
+
+
+
+
+
